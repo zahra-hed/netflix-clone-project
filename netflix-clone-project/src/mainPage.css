@@ -37,7 +37,7 @@ a{
 }
 .lang-dd{
     border-color: grey;
-    width: 130px;
+    height: 33px;
 }
 .lang-dd:hover{
     border-color: grey;
@@ -51,8 +51,63 @@ a{
 }
 .si-btn{
     height: 35px;
-    border: none;
 }
-.si-btn:hover{
-    background-color: rgb(193,17,25) !important;
+.bg-img-wrapper{
+    z-index: -1;
+    overflow: hidden;
+}
+.bg-img-wrapper::after {
+    content: '';
+    position: absolute;
+    display: block;    
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgb(0,0,0,0.4);
+    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.8) 100%);
+}
+.first-card-content{
+    margin-top: 190px;
+}
+.gs-btn{
+    width: 190px;
+}
+@media only screen and (max-width: 1279px){
+    .mp-header{
+        padding-left: 30px;
+        padding-right: 30px;
+    }    
+    .bg-img{
+        min-width: 1279px;
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        -o-transform: translateX(-50%);
+        transform: translateX(-50%);
+    }
+}
+
+@media only screen and (max-width: 958px){
+    .icon-wrapper{
+        width: 90px;
+    }
+    .lang-dd-wrapper{
+        margin-right: 10px !important;
+    }
+    .bg-img{
+        min-width: 1050px;
+    }
+}
+
+@media only screen and (max-width: 600px){
+    .dd-sel-lang{
+        display: none;
+    }
+    .lang-icon-wrapper{
+        margin-right: 0;
+    }
+    .bg-img{
+        min-width: 1000px;
+    }
 }

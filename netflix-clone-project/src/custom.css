@@ -13,4 +13,8 @@
 }
 .btn-secondary{
     background-color: var(--secondary-color) !important;
+    border: none;
+}
+.btn-secondary:hover{
+    background-color: rgb(193,17,25) !important;
 }
