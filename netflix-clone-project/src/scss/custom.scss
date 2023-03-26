@@ -1,0 +1,15 @@
+$primary: #232323;
+$secondary: #e50914;
+
+$custom-colors:(
+    "primary": $primary,
+    "secondary": $secondary
+);
+
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+.btn-secondary:hover{
+    background-color: rgb(193,17,25) !important;
+}
