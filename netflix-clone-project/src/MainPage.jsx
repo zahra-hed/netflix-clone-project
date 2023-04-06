@@ -1,9 +1,57 @@
+import { useState } from "react";
 import "./mainPage.css";
 
-const videoSrcSC = "https://assets.nflxext.com/ffe/siteui/acquisition/ourStory/fuji/desktop/video-tv-0819.m4v";
-
+const vidSrc1 = "https://assets.nflxext.com/ffe/siteui/acquisition/ourStory/fuji/desktop/video-tv-0819.m4v";
+const vidSrc2 = "https://assets.nflxext.com/ffe/siteui/acquisition/ourStory/fuji/desktop/video-devices.m4v";
 
 function MainPage(){
+    const faqs = [
+        {
+            "question": "What is Netflix?",
+            "answer": [
+                "Netflix is a streaming service that offers a wide variety of award-winning TV shows, movies, anime, documentaries, and more on thousands of internet-connected devices.",
+                "You can watch as much as you want, whenever you want without a single commercial – all for one low monthly price. There's always something new to discover and new TV shows and movies are added every week!"
+            ]
+        },
+        {
+            "question": "How much does Netflix cost?",
+            "answer": [
+                "Watch Netflix on your smartphone, tablet, Smart TV, laptop, or streaming device, all for one fixed monthly fee. Plans range from USD3.99 to USD9.99 a month. No extra costs, no contracts."            ]        },
+        {
+            "question": "Where can I watch?",
+            "answer": [
+                "Watch anywhere, anytime. Sign in with your Netflix account to watch instantly on the web at netflix.com from your personal computer or on any internet-connected device that offers the Netflix app, including smart TVs, smartphones, tablets, streaming media players and game consoles.",
+                "You can also download your favorite shows with the iOS, Android, or Windows 10 app. Use downloads to watch while you're on the go and without an internet connection. Take Netflix with you anywhere."
+            ]        
+        },
+        {
+            "question": "How do I cancel?",
+            "answer": [
+                "Netflix is flexible. There are no pesky contracts and no commitments. You can easily cancel your account online in two clicks. There are no cancellation fees – start or stop your account anytime.",
+            ]        
+        },
+        {
+            "question": "What can I watch on Netflix?",
+            "answer": [
+                "Netflix has an extensive library of feature films, documentaries, TV shows, anime, award-winning Netflix originals, and more. Watch as much as you want, anytime you want.",
+            ]        
+        },
+        {
+            "question": "Is Netflix good for kids?",
+            "answer": [
+                "The Netflix Kids experience is included in your membership to give parents control while kids enjoy family-friendly TV shows and movies in their own space.",
+                "Kids profiles come with PIN-protected parental controls that let you restrict the maturity rating of content kids can watch and block specific titles you don’t want kids to see."
+            ]        
+        }
+    ];
+    const [openedID, setOpenedID] = useState(-1);
+    const handleClickFAQS = (index) => {
+        if(openedID == index)
+            setOpenedID(-1);
+        else
+            setOpenedID(index);
+    }
+
     return (
     <div className="text-white">
         <div className="plan-offer d-none bg-white d-flex justify-content-center align-items-center w-100 px-4 py-3 text-black">
@@ -41,9 +89,9 @@ function MainPage(){
        <main className="w-100">
             <div className="first-card position-relative overflow-hidden w-100">
                 <div className="bg-img-wrapper bg-black position-absolute h-100">
-                    <img className="bg-img w-100 " src="./background_pic.jpg"/>
+                    <img className="bg-img w-100 " src="./images/background_pic.jpg"/>
                 </div>
-                <div className="first-card-content h-100 w-100 d-flex flex-column align-items-center text-center px-3">
+                <div className="first-card-content h-100 w-100 d-flex flex-column align-items-center text-center px-4">
                     <h1 className="mp-title fw-bolder">Unlimited movies, TV shows, and more.</h1>
                     <p className="mp-title-desc mt-2">Watch anywhere. Cancel anytime.</p>
                     <div className="mt-2 px-4">
@@ -51,12 +99,12 @@ function MainPage(){
                             <h3 className="mp-form-h3 fw-normal lh-base">
                             Ready to watch? Enter your email to create or restart your membership.
                             </h3>
-                            <div className="d-flex flex-column flex-sm-row align-items-center justify-content-center mt-3 mx-3">
+                            <div className="d-flex flex-column flex-sm-row align-items-center justify-content-center mt-3 mx-md-4">
                                 <div className="email-input-wrapper form-floating w-100">
                                     <input ctype="email" className="mp-email-input form-control" style={{"height": "50px"}} id="emailInput" placeholder="Email address"/>
                                     <label for="emailInput" className="d-flex align-items-center" style={{"color": "grey"}}>Email address</label>
                                 </div>  
-                                <button className="gs-btn btn btn-secondary d-block fw-bolder mt-3 mt-sm-0 d-flex justify-content-center align-items-center">
+                                <button className="gs-btn btn btn-secondary d-block fw-bolder mt-3 mt-sm-0 ms-sm-2 d-flex justify-content-center align-items-center">
                                     <span>Get Started</span>
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="Hawkins-Icon Hawkins-Icon-Standard"><path fillRule="evenodd" clipRule="evenodd" d="M7.29297 19.2928L14.5859 12L7.29297 4.70706L8.70718 3.29285L16.7072 11.2928C16.8947 11.4804 17.0001 11.7347 17.0001 12C17.0001 12.2652 16.8947 12.5195 16.7072 12.7071L8.70718 20.7071L7.29297 19.2928Z" fill="currentColor"></path></svg>
                                 </button>
@@ -66,18 +114,18 @@ function MainPage(){
                 </div>
             </div>
             <div className="card-separator w-100 bg-primary"></div>
-            <div className="second-card bg-black w-100 py-5">
-                <div className="container">
-                    <div className="second-card-content row align-items-center">
-                        <div className="col-lg-6 col-xs-12">
+            <div className="mp-card bg-black w-100 py-5">
+                <div className="container px-4">
+                    <div className="row align-items-center">
+                        <div className="col-lg-6 col-xs-12 text-center text-lg-start">
                             <h2 className="mp-h2 fw-bold">Enjoy on your TV.</h2>
                             <p className="mp-h2-decs fw-semibold mt-3">Watch on Smart TVs, Playstation, Xbox, Chromecast, Apple TV, Blu-ray players, and more.</p>
                         </div>
                         <div className="col-lg-6 col-xs-12 position-relative">
-                            <img src="tv.png" className="img-fluid" style={{"z-index": "1", "position": "relative"}}/>
-                            <div className="sc-vid-wrapper position-absolute">
+                            <img src="./images/tv.png" className="img-fluid" style={{"z-index": "1", "position": "relative"}}/>
+                            <div className="vid-wrapper-1 position-absolute">
                                 <video width="100%" height="100%" muted autoPlay loop>
-                                    <source src={videoSrcSC} type="video/mp4"/>
+                                    <source src={vidSrc1} type="video/mp4"/>
                                     Your browser does not support the video tag.
                                 </video>
                             </div>
@@ -86,6 +134,107 @@ function MainPage(){
                 </div>
             </div>
             <div className="card-separator w-100 bg-primary"></div>
+            <div className="mp-card bg-black w-100 py-5">                
+                <div className="container px-4">
+                    <div className="row align-items-center flex-row-reverse">      
+                        <div className="col-lg-6 col-xs-12 text-center text-lg-start">
+                            <h2 className="mp-h2 fw-bold">Watch everywhere.</h2>
+                            <p className="mp-h2-decs fw-semibold mt-3">Stream unlimited movies and TV shows on your phone, tablet, laptop, and TV without paying more.</p>
+                        </div>                  
+                        <div className="col-lg-6 col-xs-12 position-relative">
+                            <img src="./images/device-pile.png" className="img-fluid" style={{"z-index": "1", "position": "relative"}}/>
+                            <div className="vid-wrapper-2 position-absolute">
+                                <video width="100%" height="100%" muted autoPlay loop>
+                                    <source src={vidSrc2} type="video/mp4"/>
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+            <div className="card-separator w-100 bg-primary"></div>
+            <div className="mp-card bg-black w-100 py-5">
+                <div className="container px-4">
+                    <div className="row align-items-center">
+                        <div className="col-lg-6 col-xs-12 text-center text-lg-start">
+                            <h2 className="mp-h2 fw-bold">Create profiles for kids.</h2>
+                            <p className="mp-h2-decs fw-semibold mt-3">Send kids on adventures with their favorite characters in a space made just for them—free with your membership.</p>
+                        </div>
+                        <div className="col-lg-6 col-xs-12 position-relative">
+                            <img src="./images/netflix-kids.png" className="img-fluid"/>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="card-separator w-100 bg-primary"></div>
+            <div className="mp-card bg-black w-100 py-5">
+                <div className="container px-4">
+                    <div className="row align-items-center flex-row-reverse">
+                        <div className="col-lg-6 col-xs-12 text-center text-lg-start">
+                            <h2 className="mp-h2 fw-bold">Download your shows to watch offline.</h2>
+                            <p className="mp-h2-decs fw-semibold mt-3">Only available on ad-free plans.</p>
+                        </div>
+                        <div className="col-lg-6 col-xs-12 position-relative d-flex justify-content-center">
+                            <img src="./images/mobile-0819.jpg" className="img-fluid" style={{"z-index": "1", "position": "relative"}}/>                            
+                            <div className="on-img-div start-50 position-absolute bg-black pt-1 pb-2 px-sm-3 d-flex align-items-center">
+                                <div className="boxshot-img-cont">
+                                    <img src="./images/boxshot.png" className="img-fluid"/>
+                                </div>
+                                <div className="ms-3">
+                                    <div className="mp-film-title fw-bold">Stranger Things</div>
+                                    <div className="mp-download-word lh-1">Downloading...</div>
+                                </div>
+                                <div className="mp-gif-wrapper ms-auto">
+                                    <img src="./images/download-icon.gif" className="img-fluid"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="card-separator w-100 bg-primary"></div>
+            <div className="mp-card bg-black w-100 py-5">
+                <div className="container px-4">
+                    <h2 className="mp-h2 fw-bold text-center">Frequently Asked Questions</h2>
+                    <div className="faqs-wrapper mt-4">
+                        <ul className="faqs-list ps-0">
+                            {
+                                faqs.map((item,index)=>{
+                                    return(
+                                        <li className="faqs-list-item mb-2">
+                                            <div role="button" className="faqs-q-box d-flex align-items-center" onClick={()=>handleClickFAQS(index)}>
+                                                <h3 className="faqs-h3 fw-normal mb-0">{item.question}</h3>
+                                                <svg className="faqs-plus-sign ms-auto" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-name="Add" alt=""><path fill-rule="evenodd" clip-rule="evenodd" d="M11 2V11H2V13H11V22H13V13H22V11H13V2H11Z" fill="currentColor"></path></svg>
+                                            </div>
+                                            <div className={`faqs-a-box ${openedID == index ? " faqs-a-box-opened": ""}`}>
+                                                    {item.answer.map((answerItem,index2)=>{     
+                                                        if(index2 =! item.answer.length-1){
+                                                            return(
+                                                            <>
+                                                                <span>{answerItem}</span>
+                                                                <br/><br/>
+                                                            </>
+                                                            )
+                                                        }                                                
+                                                        else{
+                                                            return(
+                                                            <>
+                                                                <span>{answerItem}</span>
+                                                            </>
+                                                            )
+                                                        }
+                                                    })}
+                                            </div>
+                                        </li>
+                                    );
+                                })
+                            }
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
        </main>
        <footer></footer>
     </div>

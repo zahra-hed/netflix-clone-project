@@ -21,34 +21,34 @@ a{
     color: #1d63c4;
     white-space: nowrap;
 }
-.learn-more-plan:hover{
+.learn-more-plan:hover {
     text-decoration: underline;
     cursor: pointer;
     color: #1d63c4;
 }
-.icon-wrapper{
+.icon-wrapper {
     width: 90px;
 }
-.lang-dd{
+.lang-dd {
     border-color: grey;
     height: 33px;
     background-color: rgb(0,0,0,0.5); 
 }
-.lang-dd:hover{
+.lang-dd:hover {
     border-color: grey;
     cursor: default;
 }
-.dropdown-toggle::after{
+.dropdown-toggle::after {
     margin-left: 15px;
 }
-.si-btn{
+.si-btn {
     height: 33px;
     font-size: 14px;
 }
-.first-card{
+.first-card {
     min-height: auto;
 }
-.bg-img-wrapper{
+.bg-img-wrapper {
     z-index: -1;
     overflow: hidden;    
     width: 1000px; 
@@ -68,20 +68,20 @@ a{
     padding-top: 120px;
     padding-bottom: 50px;
 }
-.mp-title{
+.mp-title {
     font-size: 32px;
 }
-.mp-title-desc{
+.mp-title-desc {
     font-size: 19px;
 }
-.mp-form-h3{
+.mp-form-h3 {
     font-size: 18px;
 }
-.mp-email-input{
+.mp-email-input {
     background-color: rgb(0,0,0,0.5) !important; 
     border: 1px solid grey;
 }
-.mp-email-input:focus{
+.mp-email-input:focus {
     outline: 1px white solid;
 }
 .gs-btn {
@@ -90,25 +90,105 @@ a{
     padding-bottom: 10px;
     font-size: 17px;
 }
-.card-separator{
-    height: 7px;
+.card-separator {
+    height: 9px;
 }
-.second-card{
+.mp-card {
+    padding: 65px 0 !important;
+}
+.second-card {
     min-height: auto;
 }
-.mp-h2{
-    font-size: 50px;
+.mp-h2 {
+    font-size: 32px;
 }
-.mp-h2-decs{
-    font-size: 24px;
+.mp-h2-decs {
+    font-size: 18px;
+    line-height: 24px;
 }
-.sc-vid-wrapper{
+.vid-wrapper-1 {
     top: 20.8%;
     left: 14.5%;
     width: 70%;
     height: 55%;
     z-index: 0;
 }
+.vid-wrapper-2 {
+    top: 10%;
+    left: 20%;
+    width: 60%;
+    height: 55%;
+    z-index: 0;
+}
+.on-img-div {
+    width: 60%;
+    min-width: 264px;
+    z-index: 1;    
+    bottom: 5%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.boxshot-img-cont {
+    width: 34px;
+}
+.mp-film-title {
+    font-size: 14px;
+}
+.mp-download-word {
+    color: #0071eb;
+    font-size: 12px;
+}
+.mp-gif-wrapper {
+    width: 46px;
+}
+.faqs-list {
+    list-style: none;
+}
+.faqs-list-item {
+
+}
+.faqs-q-box {
+    padding: 24px;
+    transition-duration: 250ms;
+    transition-property: background-color;
+    transition-timing-function: cubic-bezier(0.9, 0, 0.51, 1);
+    background-color: #2d2d2d;
+}
+.faqs-q-box:hover {
+    background-color: #4e4e4e !important;
+}
+.faqs-h3 {
+    font-size: 18px;
+}
+.faqs-plus-sign {
+    width: 16px;
+    height: 16px;
+}
+.faqs-a-box {
+    overflow: hidden;
+    font-size: 18px;
+    padding: 0 24px;
+    max-height: 0;
+    visibility: collapse;
+    transition: all 0.25s cubic-bezier(0.5, 0, 0.1, 1);
+    background-color: #2d2d2d;
+}
+.faqs-a-box-opened {
+    margin-top: 1px;
+    font-size: 18px;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    max-height: 600px;
+    visibility: visible;
+}
+
+
 @media only screen and (min-width: 600px){
     .mp-header{
         margin-left: 30px !important;
@@ -120,8 +200,27 @@ a{
         -ms-transform: scale(1.25);
         -o-transform: scale(1.25);
     }
+    .first-card-content {
+        padding-top: 200px;
+        padding-bottom: 100px;
+    }
     .email-input-wrapper{
-        max-width: 280px;
+        width: 75% !important;
+    }
+    .gs-btn {
+        width: 200px;
+        padding-top: 7px;
+        padding-bottom: 7px;
+        font-size: 23px;
+    }
+    .boxshot-img-cont {
+        width: 46px;
+    }
+    .mp-film-title {
+        font-size: 17px;
+    }
+    .mp-download-word {
+        font-size: 14px;
     }
 }
 @media only screen and (min-width: 958px){
@@ -139,6 +238,26 @@ a{
         -ms-transform: translateX(-50%);
         -o-transform: translateX(-50%);  
     } 
+    .mp-title {
+        font-size: 48px;
+    }
+    .mp-title-desc {
+        font-size: 26px;
+    }
+    .mp-form-h3 {
+        font-size: 20px;
+    }
+    .first-card-content {
+        padding-top: 280px;
+        padding-bottom: 100px;
+    }
+    .mp-h2{
+        font-size: 50px;
+    }
+    .mp-h2-decs{
+        font-size: 24px;
+        line-height: normal;
+    }
 }
 @media only screen and (min-width: 1279px){
     .mp-header{
