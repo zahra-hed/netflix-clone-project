@@ -164,7 +164,7 @@ a{
     background-color: #4e4e4e !important;
 }
 .faqs-h3 {
-    font-size: 18px;
+    font-size: 19px;
 }
 .faqs-plus-sign {
     width: 16px;
@@ -172,7 +172,7 @@ a{
 }
 .faqs-a-box {
     overflow: hidden;
-    font-size: 18px;
+    font-size: 19px;
     padding: 0 24px;
     max-height: 0;
     visibility: collapse;
@@ -181,13 +181,18 @@ a{
 }
 .faqs-a-box-opened {
     margin-top: 1px;
-    font-size: 18px;
     padding-top: 24px;
     padding-bottom: 24px;
     max-height: 600px;
     visibility: visible;
 }
-
+.rotate-45{
+    transform: rotate(45deg);
+}
+.last-card-wrapper {
+    padding-left: 25px;
+    padding-right: 25px;
+}
 
 @media only screen and (min-width: 600px){
     .mp-header{
@@ -205,7 +210,7 @@ a{
         padding-bottom: 100px;
     }
     .email-input-wrapper{
-        width: 75% !important;
+        width: 60% !important;
     }
     .gs-btn {
         width: 200px;
@@ -221,6 +226,20 @@ a{
     }
     .mp-download-word {
         font-size: 14px;
+    }
+    .faqs-h3 {
+        font-size: 25px;
+    }
+    .faqs-a-box {
+        font-size: 25px;
+    }
+    .faqs-plus-sign {
+        width: 35px;
+        height: 35px;
+    }
+    .last-card-wrapper {
+        padding-left: 30px;
+        padding-right: 30px;
     }
 }
 @media only screen and (min-width: 958px){
@@ -267,24 +286,9 @@ a{
     .bg-img-wrapper{
         width: 100%;
     }
-}
-
-/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-
-
-@media only screen and (max-width: 1279px){   
-   
-}
-
-@media only screen and (max-width: 958px){
-    /* .mp-title{
-        font-size: 2rem;
+    .last-card-wrapper {
+        padding-left: 175px;
+        padding-right: 175px;
     }
-    .mp-title-desc{
-        font-size: 1.2rem;
-    }
-    .mp-form-h3{
-        font-size: 1.1rem !important;
-    } */
 }
 

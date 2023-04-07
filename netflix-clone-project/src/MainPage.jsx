@@ -195,7 +195,7 @@ function MainPage(){
             </div>
             <div className="card-separator w-100 bg-primary"></div>
             <div className="mp-card bg-black w-100 py-5">
-                <div className="container px-4">
+                <div className="last-card-wrapper w-100 d-flex flex-column align-items-center">
                     <h2 className="mp-h2 fw-bold text-center">Frequently Asked Questions</h2>
                     <div className="faqs-wrapper mt-4">
                         <ul className="faqs-list ps-0">
@@ -205,11 +205,11 @@ function MainPage(){
                                         <li className="faqs-list-item mb-2">
                                             <div role="button" className="faqs-q-box d-flex align-items-center" onClick={()=>handleClickFAQS(index)}>
                                                 <h3 className="faqs-h3 fw-normal mb-0">{item.question}</h3>
-                                                <svg className="faqs-plus-sign ms-auto" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-name="Add" alt=""><path fill-rule="evenodd" clip-rule="evenodd" d="M11 2V11H2V13H11V22H13V13H22V11H13V2H11Z" fill="currentColor"></path></svg>
+                                                <svg className={`faqs-plus-sign ms-auto ${openedID == index && " rotate-45"}`} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-name="Add" alt=""><path fill-rule="evenodd" clip-rule="evenodd" d="M11 2V11H2V13H11V22H13V13H22V11H13V2H11Z" fill="currentColor"></path></svg>
                                             </div>
                                             <div className={`faqs-a-box ${openedID == index ? " faqs-a-box-opened": ""}`}>
                                                     {item.answer.map((answerItem,index2)=>{     
-                                                        if(index2 =! item.answer.length-1){
+                                                        if(index2 != item.answer.length-1){
                                                             return(
                                                             <>
                                                                 <span>{answerItem}</span>
@@ -231,10 +231,27 @@ function MainPage(){
                                 })
                             }
                         </ul>
-
+                    </div>
+                    <div className="mt-5 px-4 text-center" style={{"maxWidth": "700px"}}>
+                        <form method="post">
+                            <h3 className="mp-form-h3 fw-normal lh-base">
+                            Ready to watch? Enter your email to create or restart your membership.
+                            </h3>
+                            <div className="d-flex flex-column flex-sm-row align-items-center justify-content-center mt-3 mx-md-4">
+                                <div className="email-input-wrapper form-floating w-100">
+                                    <input ctype="email" className="mp-email-input form-control" style={{"height": "50px"}} id="emailInput" placeholder="Email address"/>
+                                    <label for="emailInput" className="d-flex align-items-center" style={{"color": "grey"}}>Email address</label>
+                                </div>  
+                                <button className="gs-btn btn btn-secondary d-block fw-bolder mt-3 mt-sm-0 ms-sm-2 d-flex justify-content-center align-items-center">
+                                    <span>Get Started</span>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="Hawkins-Icon Hawkins-Icon-Standard"><path fillRule="evenodd" clipRule="evenodd" d="M7.29297 19.2928L14.5859 12L7.29297 4.70706L8.70718 3.29285L16.7072 11.2928C16.8947 11.4804 17.0001 11.7347 17.0001 12C17.0001 12.2652 16.8947 12.5195 16.7072 12.7071L8.70718 20.7071L7.29297 19.2928Z" fill="currentColor"></path></svg>
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
+            <div className="card-separator w-100 bg-primary"></div>
        </main>
        <footer></footer>
     </div>
