@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import validator from "validator";
 import "./mainPage.css";
 
 const vidSrc1 = "https://assets.nflxext.com/ffe/siteui/acquisition/ourStory/fuji/desktop/video-tv-0819.m4v";
@@ -44,12 +45,86 @@ function MainPage(){
             ]        
         }
     ];
+
     const [openedID, setOpenedID] = useState(-1);
+    const [emailValid, setEmailValid] = useState(-2);
+    const [emailValid2, setEmailValid2] = useState(-2);
+    // emailValid states:
+    // -2 : initial state
+    // -1 : the email input hes less than 5 characters (or is empty)
+    // 0 : the input is more than 4 characters but is invalid
+    // 1: the input is valid
+
+    const emailInputRef = useRef(null);
+    const emailInputRef2 = useRef(null);
+    const bluredFor1stTime = useRef(false);
+    const bluredFor1stTime2 = useRef(false);
+
+
     const handleClickFAQS = (index) => {
         if(openedID == index)
             setOpenedID(-1);
         else
             setOpenedID(index);
+    }
+
+    const validateEmail = (e, index) => {
+        let emailInput = e.target.value.trim();
+        if(emailInput.length > 4){
+            if(validator.isEmail(emailInput)){
+                if(index == 1)
+                    setEmailValid(1);
+                else if(index == 2)
+                    setEmailValid2(1);
+            }
+            else {
+                if(index == 1)
+                    setEmailValid(0);
+                else if(index == 2)
+                    setEmailValid2(0);
+            }
+        }
+        else {
+            if(index == 1)
+                setEmailValid(-1);
+            else if(index == 2)
+                setEmailValid2(-1);
+        }
+    }
+
+    const handleGSBtnClick = (e, index) => {
+        if(index == 1){
+            if(emailValid != 1)
+                emailInputRef.current.focus();
+        }
+        else if(index == 2){
+            if(emailValid2 != 1)
+                emailInputRef2.current.focus();
+        }
+    }
+
+    const onBlurHandler = (e, index) => {
+        if(index == 1){
+            if(!bluredFor1stTime.current){
+                validateEmail(e, index);
+                bluredFor1stTime.current = true;
+            }
+        }            
+        else if(index == 2)
+            if(!bluredFor1stTime2.current){
+                validateEmail(e, index);
+                bluredFor1stTime2.current = true;
+            }
+    }
+
+    const onChangeHandler = (e, index) => {
+        if(index == 1){
+            if(bluredFor1stTime.current)
+                validateEmail(e, index);
+        }        
+        else if(index == 2)
+            if(bluredFor1stTime2.current)
+                validateEmail(e, index);
     }
 
     return (
@@ -61,7 +136,7 @@ function MainPage(){
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="Hawkins-Icon Hawkins-Icon-Standard"><path fillRule="evenodd" clipRule="evenodd" d="M7.29297 19.2928L14.5859 12L7.29297 4.70706L8.70718 3.29285L16.7072 11.2928C16.8947 11.4804 17.0001 11.7347 17.0001 12C17.0001 12.2652 16.8947 12.5195 16.7072 12.7071L8.70718 20.7071L7.29297 19.2928Z" fill="currentColor"></path></svg>
             </a>
         </div>
-       <header className="position-absolute w-100" style={{"z-index": "1"}}>
+       <header className="header-container position-absolute w-100 start-50" style={{"z-index": "1"}}>
             <div className="mp-header d-flex align-items-center mt-4 mx-4">
                 <div className="icon-wrapper">
                     <svg className="svg-default" fill="#e50914" viewBox="0 0 111 30" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img">
@@ -99,12 +174,28 @@ function MainPage(){
                             <h3 className="mp-form-h3 fw-normal lh-base">
                             Ready to watch? Enter your email to create or restart your membership.
                             </h3>
-                            <div className="d-flex flex-column flex-sm-row align-items-center justify-content-center mt-3 mx-md-4">
-                                <div className="email-input-wrapper form-floating w-100">
-                                    <input ctype="email" className="mp-email-input form-control" style={{"height": "50px"}} id="emailInput" placeholder="Email address"/>
-                                    <label for="emailInput" className="d-flex align-items-center" style={{"color": "grey"}}>Email address</label>
+                            <div className="d-flex flex-column flex-sm-row align-items-center align-items-sm-start justify-content-center mt-3 mx-md-4">
+                                <div className="email-input-wrapper w-100">
+                                    <div className="form-floating">
+                                        <input type="email" className={`mp-email-input form-control text-white ${(emailValid == 0 || emailValid == -1)? "invalid-input": emailValid == 1? "valid-input": "" } `} style={{"height": "50px"}} id="emailInput" placeholder="Email address"
+                                            onBlur={(e)=>onBlurHandler(e,1)}
+                                            onChange={(e)=>onChangeHandler(e,1)}
+                                            ref={emailInputRef}
+                                            required                                            
+                                        />
+                                        <label for="emailInput" className="d-flex align-items-center fw-semibold" style={{"color": "#ffffffb3", "opacity": "1"}}>Email address</label>
+                                    </div>
+                                    <div className={`email-required d-flex align-items-center mt-1 ${ emailValid == 0 || emailValid == -1 ? "d-flex" : "d-none" }`}>
+                                        <svg style={{"marginRight": "7px"}} width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="default-ltr-cache-0 e19utwz71" data-name="Failure" role="img" aria-hidden="true">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.5 8C13.5 11.0376 11.0376 13.5 8 13.5C4.96243 13.5 2.5 11.0376 2.5 8C2.5 4.96243 4.96243 2.5 8 2.5C11.0376 2.5 13.5 4.96243 13.5 8ZM15 8C15 11.866 11.866 15 8 15C4.13401 15 1 11.866 1 8C1 4.13401 4.13401 1 8 1C11.866 1 15 4.13401 15 8ZM4.96967 6.03033L6.93934 8L4.96967 9.96967L6.03033 11.0303L8 9.06066L9.96967 11.0303L11.0303 9.96967L9.06066 8L11.0303 6.03033L9.96967 4.96967L8 6.93934L6.03033 4.96967L4.96967 6.03033Z" fill="currentColor">
+                                            </path>
+                                        </svg>
+                                        {emailValid == -1 ? "Email is required!": emailValid == 0 ? "Please enter a valid email address": ""}
+                                    </div>
                                 </div>  
-                                <button className="gs-btn btn btn-secondary d-block fw-bolder mt-3 mt-sm-0 ms-sm-2 d-flex justify-content-center align-items-center">
+                                <button className="gs-btn btn btn-secondary d-block fw-bolder mt-3 mt-sm-0 ms-sm-2 d-flex justify-content-center align-items-center"
+                                    onClick={(e)=>handleGSBtnClick(e, 1)}
+                                    >
                                     <span>Get Started</span>
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="Hawkins-Icon Hawkins-Icon-Standard"><path fillRule="evenodd" clipRule="evenodd" d="M7.29297 19.2928L14.5859 12L7.29297 4.70706L8.70718 3.29285L16.7072 11.2928C16.8947 11.4804 17.0001 11.7347 17.0001 12C17.0001 12.2652 16.8947 12.5195 16.7072 12.7071L8.70718 20.7071L7.29297 19.2928Z" fill="currentColor"></path></svg>
                                 </button>
@@ -195,7 +286,7 @@ function MainPage(){
             </div>
             <div className="card-separator w-100 bg-primary"></div>
             <div className="mp-card bg-black w-100 py-5">
-                <div className="last-card-wrapper w-100 d-flex flex-column align-items-center">
+                <div className="last-card-wrapper w-100 d-flex flex-column align-items-center mx-auto">
                     <h2 className="mp-h2 fw-bold text-center">Frequently Asked Questions</h2>
                     <div className="faqs-wrapper mt-4">
                         <ul className="faqs-list ps-0">
@@ -237,12 +328,29 @@ function MainPage(){
                             <h3 className="mp-form-h3 fw-normal lh-base">
                             Ready to watch? Enter your email to create or restart your membership.
                             </h3>
-                            <div className="d-flex flex-column flex-sm-row align-items-center justify-content-center mt-3 mx-md-4">
-                                <div className="email-input-wrapper form-floating w-100">
-                                    <input ctype="email" className="mp-email-input form-control" style={{"height": "50px"}} id="emailInput" placeholder="Email address"/>
-                                    <label for="emailInput" className="d-flex align-items-center" style={{"color": "grey"}}>Email address</label>
-                                </div>  
-                                <button className="gs-btn btn btn-secondary d-block fw-bolder mt-3 mt-sm-0 ms-sm-2 d-flex justify-content-center align-items-center">
+                            <div className="d-flex flex-column flex-sm-row align-items-center align-items-sm-start justify-content-center mt-3 mx-md-4">
+                                <div className="email-input-wrapper w-100">
+                                    <div className="form-floating">
+                                        <input type="email" className={`mp-email-input form-control text-white ${(emailValid2 == 0 || emailValid2 == -1)? "invalid-input": emailValid2 == 1? "valid-input": "" } `}
+                                        style={{"height": "50px"}} id="emailInput" placeholder="Email address"
+                                        onBlur={(e)=>onBlurHandler(e,2)}
+                                        onChange={(e)=>onChangeHandler(e,2)}
+                                        ref={emailInputRef2}
+                                        required
+                                        />
+                                        <label for="emailInput" className="d-flex align-items-center fw-semibold"  style={{"color": "#ffffffb3", "opacity": "1"}}>Email address</label>
+                                    </div> 
+                                    <div className={`email-required d-flex align-items-center mt-1 ${ emailValid2 == 0 || emailValid2 == -1 ? "d-flex" : "d-none" }`}>
+                                        <svg style={{"marginRight": "7px"}} width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="default-ltr-cache-0 e19utwz71" data-name="Failure" role="img" aria-hidden="true">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.5 8C13.5 11.0376 11.0376 13.5 8 13.5C4.96243 13.5 2.5 11.0376 2.5 8C2.5 4.96243 4.96243 2.5 8 2.5C11.0376 2.5 13.5 4.96243 13.5 8ZM15 8C15 11.866 11.866 15 8 15C4.13401 15 1 11.866 1 8C1 4.13401 4.13401 1 8 1C11.866 1 15 4.13401 15 8ZM4.96967 6.03033L6.93934 8L4.96967 9.96967L6.03033 11.0303L8 9.06066L9.96967 11.0303L11.0303 9.96967L9.06066 8L11.0303 6.03033L9.96967 4.96967L8 6.93934L6.03033 4.96967L4.96967 6.03033Z" fill="currentColor">
+                                            </path>
+                                        </svg>
+                                        {emailValid2 == -1 ? "Email is required!": emailValid2 == 0 ? "Please enter a valid email address": ""}
+                                    </div>
+                                </div> 
+                                <button className="gs-btn btn btn-secondary d-block fw-bolder mt-3 mt-sm-0 ms-sm-2 d-flex justify-content-center align-items-center"
+                                    onClick={(e)=>handleGSBtnClick(e, 2)}
+                                >
                                     <span>Get Started</span>
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="Hawkins-Icon Hawkins-Icon-Standard"><path fillRule="evenodd" clipRule="evenodd" d="M7.29297 19.2928L14.5859 12L7.29297 4.70706L8.70718 3.29285L16.7072 11.2928C16.8947 11.4804 17.0001 11.7347 17.0001 12C17.0001 12.2652 16.8947 12.5195 16.7072 12.7071L8.70718 20.7071L7.29297 19.2928Z" fill="currentColor"></path></svg>
                                 </button>
@@ -253,7 +361,124 @@ function MainPage(){
             </div>
             <div className="card-separator w-100 bg-primary"></div>
        </main>
-       <footer></footer>
+       <footer className="bg-black">
+            <div className="footer-container mx-auto">
+                <div>Questions? Call &nbsp;
+                    <a href="tel:1-844-505-2993" className="footer-link">1-844-505-2993</a>
+                </div>
+                <div className="footer-links-container">
+                    <ul className="footer-list d-grid ps-0">
+                        <li className="footer-li">
+                            <a href="" className="footer-link">
+                                FAQ
+                            </a>
+                        </li>
+                        <li className="footer-li">
+                            <a href="" className="footer-link">
+                                Help Center
+                            </a>
+                        </li>
+                        <li className="footer-li">
+                            <a href="" className="footer-link">
+                                Account
+                            </a>
+                        </li>
+                        <li className="footer-li">
+                            <a href="" className="footer-link">
+                                Media Center
+                            </a>
+                        </li>
+                        <li className="footer-li">
+                            <a href="" className="footer-link">
+                                Investor Relations
+                            </a>
+                        </li>
+                        <li className="footer-li">
+                            <a href="" className="footer-link">
+                                Jobs
+                            </a>
+                        </li>
+                        <li className="footer-li">
+                            <a href="" className="footer-link">
+                                Netflix Shop
+                            </a>
+                        </li>
+                        <li className="footer-li">
+                            <a href="" className="footer-link">
+                                Redeem Gift Cards
+                            </a>
+                        </li>
+                        <li className="footer-li">
+                            <a href="" className="footer-link">
+                                Buy Gift Cards
+                            </a>
+                        </li>
+                        <li className="footer-li">
+                            <a href="" className="footer-link">
+                                Ways to Watch
+                            </a>
+                        </li>
+                        <li className="footer-li">
+                            <a href="" className="footer-link">
+                                Terms of Use
+                            </a>
+                        </li>
+                        <li className="footer-li">
+                            <a href="" className="footer-link">
+                                Privacy
+                            </a>
+                        </li>
+                        <li className="footer-li">
+                            <a href="" className="footer-link">
+                                Cookie Preferences
+                            </a>
+                        </li>
+                        <li className="footer-li">
+                            <a href="" className="footer-link">
+                                Corporate Information
+                            </a>
+                        </li>
+                        <li className="footer-li">
+                            <a href="" className="footer-link">
+                                Contact Us
+                            </a>
+                        </li>
+                        <li className="footer-li">
+                            <a href="" className="footer-link">
+                                Speed Test
+                            </a>
+                        </li>
+                        <li className="footer-li">
+                            <a href="" className="footer-link">
+                                Legal Notices
+                            </a>
+                        </li>
+                        <li className="footer-li">
+                            <a href="" className="footer-link">
+                                Only on Netflix
+                            </a>
+                        </li>
+                        <li className="footer-li">
+                            <a href="" className="footer-link">
+                                Do Not Sell or Share My Personal Information
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div className="lang-dd-wrapper dropdown mt-5" style={{"width": "fit-content"}}>                
+                    <a className="lang-dd px-2 d-flex align-items-center btn text-white py-1 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div className="lang-icon-wrapper me-2">
+                            <svg className="svg-default" width="16" height="16" viewBox="0 0 16 16" fill="#000" xmlns="http://www.w3.org/2000/svg" data-name="Globe"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 14.5C8.23033 14.5 8.84266 14.2743 9.48679 12.986C9.76293 12.4337 9.99973 11.7621 10.1748 11H5.8252C6.00027 11.7621 6.23707 12.4337 6.51321 12.986C7.15734 14.2743 7.76967 14.5 8 14.5ZM5.57762 9.5C5.52716 9.02077 5.5 8.51911 5.5 8C5.5 7.48089 5.52716 6.97923 5.57762 6.5H10.4224C10.4728 6.97923 10.5 7.48089 10.5 8C10.5 8.51911 10.4728 9.02077 10.4224 9.5H5.57762ZM11.7092 11C11.4822 12.1217 11.1317 13.117 10.6914 13.9184C12.0137 13.3161 13.0987 12.2837 13.7678 11H11.7092ZM14.3261 9.5H11.9298C11.9759 9.01412 12 8.51269 12 8C12 7.48731 11.9759 6.98588 11.9298 6.5H14.3261C14.4398 6.98152 14.5 7.48373 14.5 8C14.5 8.51627 14.4398 9.01848 14.3261 9.5ZM4.0702 9.5H1.67393C1.56019 9.01848 1.5 8.51627 1.5 8C1.5 7.48373 1.56019 6.98152 1.67393 6.5H4.0702C4.02411 6.98588 4 7.48731 4 8C4 8.51269 4.02411 9.01412 4.0702 9.5ZM2.23221 11H4.29076C4.51779 12.1217 4.86832 13.117 5.30864 13.9184C3.98635 13.3161 2.90128 12.2837 2.23221 11ZM5.8252 5H10.1748C9.99973 4.23793 9.76293 3.56626 9.48679 3.01397C8.84266 1.72571 8.23033 1.5 8 1.5C7.76967 1.5 7.15734 1.72571 6.51321 3.01397C6.23707 3.56626 6.00027 4.23793 5.8252 5ZM11.7092 5H13.7678C13.0987 3.71627 12.0137 2.68389 10.6914 2.08162C11.1317 2.88302 11.4822 3.8783 11.7092 5ZM5.30864 2.08162C4.86832 2.88302 4.51779 3.8783 4.29076 5H2.23221C2.90128 3.71628 3.98635 2.68389 5.30864 2.08162ZM8 0C12.4183 0 16 3.58172 16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0Z" fill="currentColor"></path></svg>
+                        </div>
+                        <span>English</span>
+                    </a>
+                    <ul className="dropdown-menu">
+                        <li><a className="dropdown-item" href="#">English</a></li>
+                        <li><a className="dropdown-item" href="#">Español</a></li>
+                    </ul>
+                </div>
+            </div>
+       </footer>
     </div>
     );
 }
