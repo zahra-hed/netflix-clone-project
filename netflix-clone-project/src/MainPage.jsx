@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import validator from "validator";
 import "./mainPage.css";
 
@@ -62,7 +62,7 @@ function MainPage(){
 
 
     const handleClickFAQS = (index) => {
-        if(openedID == index)
+        if(openedID === index)
             setOpenedID(-1);
         else
             setOpenedID(index);
@@ -72,45 +72,45 @@ function MainPage(){
         let emailInput = e.target.value.trim();
         if(emailInput.length > 4){
             if(validator.isEmail(emailInput)){
-                if(index == 1)
+                if(index === 1)
                     setEmailValid(1);
-                else if(index == 2)
+                else if(index === 2)
                     setEmailValid2(1);
             }
             else {
-                if(index == 1)
+                if(index === 1)
                     setEmailValid(0);
-                else if(index == 2)
+                else if(index === 2)
                     setEmailValid2(0);
             }
         }
         else {
-            if(index == 1)
+            if(index === 1)
                 setEmailValid(-1);
-            else if(index == 2)
+            else if(index === 2)
                 setEmailValid2(-1);
         }
     }
 
     const handleGSBtnClick = (e, index) => {
-        if(index == 1){
-            if(emailValid != 1)
+        if(index === 1){
+            if(emailValid !== 1)
                 emailInputRef.current.focus();
         }
-        else if(index == 2){
-            if(emailValid2 != 1)
+        else if(index === 2){
+            if(emailValid2 !== 1)
                 emailInputRef2.current.focus();
         }
     }
 
     const onBlurHandler = (e, index) => {
-        if(index == 1){
+        if(index === 1){
             if(!bluredFor1stTime.current){
                 validateEmail(e, index);
                 bluredFor1stTime.current = true;
             }
         }            
-        else if(index == 2)
+        else if(index === 2)
             if(!bluredFor1stTime2.current){
                 validateEmail(e, index);
                 bluredFor1stTime2.current = true;
@@ -118,11 +118,11 @@ function MainPage(){
     }
 
     const onChangeHandler = (e, index) => {
-        if(index == 1){
+        if(index === 1){
             if(bluredFor1stTime.current)
                 validateEmail(e, index);
         }        
-        else if(index == 2)
+        else if(index === 2)
             if(bluredFor1stTime2.current)
                 validateEmail(e, index);
     }
@@ -170,14 +170,14 @@ function MainPage(){
                     <h1 className="mp-title fw-bolder">Unlimited movies, TV shows, and more.</h1>
                     <p className="mp-title-desc mt-2">Watch anywhere. Cancel anytime.</p>
                     <div className="mt-2 px-4">
-                        <form method="post">
+                        <form>
                             <h3 className="mp-form-h3 fw-normal lh-base">
                             Ready to watch? Enter your email to create or restart your membership.
                             </h3>
                             <div className="d-flex flex-column flex-sm-row align-items-center align-items-sm-start justify-content-center mt-3 mx-md-4">
                                 <div className="email-input-wrapper w-100">
                                     <div className="form-floating">
-                                        <input type="email" className={`mp-email-input form-control text-white ${(emailValid == 0 || emailValid == -1)? "invalid-input": emailValid == 1? "valid-input": "" } `} style={{"height": "50px"}} id="emailInput" placeholder="Email address"
+                                        <input type="email" className={`mp-email-input form-control text-white ${(emailValid === 0 || emailValid === -1)? "invalid-input": emailValid === 1? "valid-input": "" } `} style={{"height": "50px"}} id="emailInput" placeholder="Email address"
                                             onBlur={(e)=>onBlurHandler(e,1)}
                                             onChange={(e)=>onChangeHandler(e,1)}
                                             ref={emailInputRef}
@@ -185,12 +185,12 @@ function MainPage(){
                                         />
                                         <label for="emailInput" className="d-flex align-items-center fw-semibold" style={{"color": "#ffffffb3", "opacity": "1"}}>Email address</label>
                                     </div>
-                                    <div className={`email-required d-flex align-items-center mt-1 ${ emailValid == 0 || emailValid == -1 ? "d-flex" : "d-none" }`}>
+                                    <div className={`email-required d-flex align-items-center mt-1 ${ emailValid === 0 || emailValid === -1 ? "d-flex" : "d-none" }`}>
                                         <svg style={{"marginRight": "7px"}} width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="default-ltr-cache-0 e19utwz71" data-name="Failure" role="img" aria-hidden="true">
                                             <path fill-rule="evenodd" clip-rule="evenodd" d="M13.5 8C13.5 11.0376 11.0376 13.5 8 13.5C4.96243 13.5 2.5 11.0376 2.5 8C2.5 4.96243 4.96243 2.5 8 2.5C11.0376 2.5 13.5 4.96243 13.5 8ZM15 8C15 11.866 11.866 15 8 15C4.13401 15 1 11.866 1 8C1 4.13401 4.13401 1 8 1C11.866 1 15 4.13401 15 8ZM4.96967 6.03033L6.93934 8L4.96967 9.96967L6.03033 11.0303L8 9.06066L9.96967 11.0303L11.0303 9.96967L9.06066 8L11.0303 6.03033L9.96967 4.96967L8 6.93934L6.03033 4.96967L4.96967 6.03033Z" fill="currentColor">
                                             </path>
                                         </svg>
-                                        {emailValid == -1 ? "Email is required!": emailValid == 0 ? "Please enter a valid email address": ""}
+                                        {emailValid === -1 ? "Email is required!": emailValid === 0 ? "Please enter a valid email address": ""}
                                     </div>
                                 </div>  
                                 <button className="gs-btn btn btn-secondary d-block fw-bolder mt-3 mt-sm-0 ms-sm-2 d-flex justify-content-center align-items-center"
@@ -296,11 +296,11 @@ function MainPage(){
                                         <li className="faqs-list-item mb-2">
                                             <div role="button" className="faqs-q-box d-flex align-items-center" onClick={()=>handleClickFAQS(index)}>
                                                 <h3 className="faqs-h3 fw-normal mb-0">{item.question}</h3>
-                                                <svg className={`faqs-plus-sign ms-auto ${openedID == index && " rotate-45"}`} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-name="Add" alt=""><path fill-rule="evenodd" clip-rule="evenodd" d="M11 2V11H2V13H11V22H13V13H22V11H13V2H11Z" fill="currentColor"></path></svg>
+                                                <svg className={`faqs-plus-sign ms-auto ${openedID === index && " rotate-45"}`} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-name="Add" alt=""><path fill-rule="evenodd" clip-rule="evenodd" d="M11 2V11H2V13H11V22H13V13H22V11H13V2H11Z" fill="currentColor"></path></svg>
                                             </div>
-                                            <div className={`faqs-a-box ${openedID == index ? " faqs-a-box-opened": ""}`}>
+                                            <div className={`faqs-a-box ${openedID === index ? " faqs-a-box-opened": ""}`}>
                                                     {item.answer.map((answerItem,index2)=>{     
-                                                        if(index2 != item.answer.length-1){
+                                                        if(index2 !== item.answer.length-1){
                                                             return(
                                                             <>
                                                                 <span>{answerItem}</span>
@@ -324,14 +324,14 @@ function MainPage(){
                         </ul>
                     </div>
                     <div className="mt-5 px-4 text-center" style={{"maxWidth": "700px"}}>
-                        <form method="post">
+                        <form>
                             <h3 className="mp-form-h3 fw-normal lh-base">
                             Ready to watch? Enter your email to create or restart your membership.
                             </h3>
                             <div className="d-flex flex-column flex-sm-row align-items-center align-items-sm-start justify-content-center mt-3 mx-md-4">
                                 <div className="email-input-wrapper w-100">
                                     <div className="form-floating">
-                                        <input type="email" className={`mp-email-input form-control text-white ${(emailValid2 == 0 || emailValid2 == -1)? "invalid-input": emailValid2 == 1? "valid-input": "" } `}
+                                        <input type="email" className={`mp-email-input form-control text-white ${(emailValid2 === 0 || emailValid2 === -1)? "invalid-input": emailValid2 === 1? "valid-input": "" } `}
                                         style={{"height": "50px"}} id="emailInput" placeholder="Email address"
                                         onBlur={(e)=>onBlurHandler(e,2)}
                                         onChange={(e)=>onChangeHandler(e,2)}
@@ -340,12 +340,12 @@ function MainPage(){
                                         />
                                         <label for="emailInput" className="d-flex align-items-center fw-semibold"  style={{"color": "#ffffffb3", "opacity": "1"}}>Email address</label>
                                     </div> 
-                                    <div className={`email-required d-flex align-items-center mt-1 ${ emailValid2 == 0 || emailValid2 == -1 ? "d-flex" : "d-none" }`}>
+                                    <div className={`email-required d-flex align-items-center mt-1 ${ emailValid2 === 0 || emailValid2 === -1 ? "d-flex" : "d-none" }`}>
                                         <svg style={{"marginRight": "7px"}} width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="default-ltr-cache-0 e19utwz71" data-name="Failure" role="img" aria-hidden="true">
                                             <path fill-rule="evenodd" clip-rule="evenodd" d="M13.5 8C13.5 11.0376 11.0376 13.5 8 13.5C4.96243 13.5 2.5 11.0376 2.5 8C2.5 4.96243 4.96243 2.5 8 2.5C11.0376 2.5 13.5 4.96243 13.5 8ZM15 8C15 11.866 11.866 15 8 15C4.13401 15 1 11.866 1 8C1 4.13401 4.13401 1 8 1C11.866 1 15 4.13401 15 8ZM4.96967 6.03033L6.93934 8L4.96967 9.96967L6.03033 11.0303L8 9.06066L9.96967 11.0303L11.0303 9.96967L9.06066 8L11.0303 6.03033L9.96967 4.96967L8 6.93934L6.03033 4.96967L4.96967 6.03033Z" fill="currentColor">
                                             </path>
                                         </svg>
-                                        {emailValid2 == -1 ? "Email is required!": emailValid2 == 0 ? "Please enter a valid email address": ""}
+                                        {emailValid2 === -1 ? "Email is required!": emailValid2 === 0 ? "Please enter a valid email address": ""}
                                     </div>
                                 </div> 
                                 <button className="gs-btn btn btn-secondary d-block fw-bolder mt-3 mt-sm-0 ms-sm-2 d-flex justify-content-center align-items-center"
