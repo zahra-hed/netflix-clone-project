@@ -15,7 +15,7 @@ permissions:
 # Only allow one deployment at a time
 concurrency:
   group: "pages"
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build-and-deploy:
@@ -34,16 +34,25 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'  # Use your project's Node version
+          node-version: '22'  # Use your project's Node version
       
       # 3. Install dependencies
       - name: Install dependencies
         run: npm ci  # 'ci' is faster and stricter than 'install'
       
-      # 4. Build the project
+      # # 4. Build the project
+      # - name: Build project
+      #   run: npm run build  # This creates dist/ or build/ folder
+
       - name: Build project
-        run: npm run build  # This creates dist/ or build/ folder
-      
+        run: |
+          echo "Running build command..."
+          npm run build || {
+            echo "Build failed with exit code: $?"
+            exit 1
+          }
+        shell: bash
+        
       # 5. Upload the built files
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
