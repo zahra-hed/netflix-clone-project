@@ -40,18 +40,10 @@ jobs:
       - name: Install dependencies
         run: npm ci  # 'ci' is faster and stricter than 'install'
       
-      # # 4. Build the project
-      # - name: Build project
-      #   run: npm run build  # This creates dist/ or build/ folder
-
+      # 4. Build the project
       - name: Build project
-        run: |
-          echo "Running build command..."
-          npm run build || {
-            echo "Build failed with exit code: $?"
-            exit 1
-          }
-        shell: bash
+        run: npm run build  # This creates dist/ or build/ folder
+
         
       # 5. Upload the built files
       - name: Upload artifact
