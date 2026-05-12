@@ -43,6 +43,8 @@ jobs:
       # 4. Build the project
       - name: Build project
         run: npm run build  # This creates dist/ or build/ folder
+        env:
+          CI: false
 
         
       # 5. Upload the built files
